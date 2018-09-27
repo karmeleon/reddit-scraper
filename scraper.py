@@ -95,34 +95,5 @@ def query_pushshift(payload):
     response = r.get('https://api.pushshift.io/reddit/search/submission', params=payload)
     return [post for post in response.json()['data']]
 
-def get_post_range(sub, start_date, end_date):
-    """
-    Get the submission epochs of the first and last submissions in the range
-    :param sub: subreddit to retrieve from
-    :param date: datetime of date to retrieve from
-    :returns: tuple of (start_id, end_id)
-    """
-    payload = {
-        'subreddit': sub,
-        'sort': 'desc',
-        'size': 1,
-        'after': int(start_date.timestamp()),
-        # add 23 hours, 59 minutes, 59 seconds to include the posts made on end_date
-        'before': int((end_date + datetime.timedelta(days=1) - datetime.timedelta(seconds=1)).timestamp()),
-        'sort_type': 'created_utc',
-        'fields': 'id',
-    }
-
-    start_payload = payload.copy()
-    start_payload['sort'] = 'asc'
-
-    end_payload = payload.copy()
-    end_payload['sort'] = 'desc'
-
-    start_id = query_pushshift(start_payload)[0]['id']
-    end_id = query_pushshift(end_payload)[0]['id']
-
-    return start_id, end_id
-
 if __name__ == '__main__':
     main()
