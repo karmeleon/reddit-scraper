@@ -1,7 +1,6 @@
 import argparse
 import datetime
 import json
-import shutil
 import os
 import os.path
 
