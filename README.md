@@ -18,3 +18,7 @@ When complete, it'll dump a `json` file in the cwd with your data.
 * The data is saved in memory before being dumped to a file at the very end, so scraping a popular subreddit for a long timespan may cause issues with RAM usage.
   * 100,000 posts use about 450MB of RAM and dump to 180MB on disk, for reference.
   * If you find yourself running out of RAM and swap, you can always scrape a smaller timespan and splice them together manually. PRs are also accepted! 😉
+
+## Tips
+
+* To merge a bunch of JSON files, try `jq -s -c 'map(.[])' *.json > combined.json`.
